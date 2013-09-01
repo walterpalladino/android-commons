@@ -27,7 +27,7 @@ import android.content.SharedPreferences.Editor;
  */
 public class SharedPreferencesDao {
 
-	private static final String APP_SHARED_PREFS = "com.whp.moonphases";
+	private static final String APP_SHARED_PREFS = "com.whp.preferences";
 
 	private SharedPreferences appSharedPrefs;
 	private Editor prefsEditor;
@@ -37,6 +37,11 @@ public class SharedPreferencesDao {
 		this.prefsEditor = appSharedPrefs.edit ();
 	}
 
+	public SharedPreferencesDao (Context context, String preferencesName) {
+		this.appSharedPrefs = context.getSharedPreferences (preferencesName, Activity.MODE_PRIVATE);
+		this.prefsEditor = appSharedPrefs.edit ();
+	}
+	
 	public void add(String key, String entity) {
 		prefsEditor.putString (key, entity);
 		prefsEditor.commit ();
