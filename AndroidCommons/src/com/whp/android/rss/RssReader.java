@@ -102,16 +102,19 @@ class RSSHandler extends DefaultHandler {
 				currentPost.setTitle(chars.toString());
 			}
 			
-			if (localName.equalsIgnoreCase("author")
-					&& currentPost.getAuthor() == null) {
-				currentPost.setAuthor(chars.toString());
+			if (localName.equalsIgnoreCase("creator")
+					&& currentPost.getCreator() == null) {
+				currentPost.setCreator(chars.toString());
 			}
 
 			if (localName.equalsIgnoreCase("description")
 					&& currentPost.getDescription() == null) {
 				currentPost.setDescription(chars.toString());
 			}
-			
+			if (localName.equalsIgnoreCase("encoded")
+					&& currentPost.getContent () == null) {
+				currentPost.setContent(chars.toString());
+			}
 			if (localName.equalsIgnoreCase("pubDate")
 					&& currentPost.getPubDate() == null) {
 				currentPost.setPubDate(chars.toString());

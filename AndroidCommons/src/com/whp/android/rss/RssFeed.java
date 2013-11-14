@@ -15,70 +15,148 @@
  */
 package com.whp.android.rss;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class RssFeed {
+/**
+ * @author Walter Hugo Palladino
+ * @since 12/10/2013
+ * 
+ */
+public class RssFeed implements Serializable {
 
-	
+	/**
+	 * Property Name : serialVersionUID
+	 * 
+	 */
+	private static final long serialVersionUID = -231353568413461793L;
+
+	/**
+	 * Property Name : title
+	 * 
+	 */
 	private String title;
+	/**
+	 * Property Name : description
+	 * 
+	 */
 	private String description;
+	/**
+	 * Property Name : pubDate
+	 * 
+	 */
 	private Date pubDate;
-	private List<String>	categories;
-	private List<RssPost>	rssItems;
-	
-	
+	/**
+	 * Property Name : categories
+	 * 
+	 */
+	private List <String> categories;
+	/**
+	 * Property Name : rssItems
+	 * 
+	 */
+	private List <RssPost> rssItems;
+
+	/**
+	 * getTitle
+	 * 
+	 * @return
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * setTitle
+	 * 
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
+	/**
+	 * setDescription
+	 * 
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * getDescription
+	 * 
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * setPubDate
+	 * 
+	 * @param pubDate
+	 */
 	public void setPubDate(String pubDate) {
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 		try {
-			this.pubDate = dateFormat.parse(pubDate);
+			this.pubDate = dateFormat.parse (pubDate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace ();
 		}
-		
+
 	}
 
+	/**
+	 * getPubDate
+	 * 
+	 * @return
+	 */
 	public Date getPubDate() {
 		return pubDate;
 	}
 
-	public List<String> getCategories() {
+	/**
+	 * getCategories
+	 * 
+	 * @return
+	 */
+	public List <String> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<String> categories) {
+	/**
+	 * setCategories
+	 * 
+	 * @param categories
+	 */
+	public void setCategories(List <String> categories) {
 		this.categories = categories;
 	}
 
-	public List<RssPost> getRssItems() {
+	/**
+	 * getRssItems
+	 * 
+	 * @return
+	 */
+	public List <RssPost> getRssItems() {
 		return rssItems;
 	}
 
-	public void setRssItems(List<RssPost> rssItems) {
+	/**
+	 * setRssItems
+	 * 
+	 * @param rssItems
+	 */
+	public void setRssItems(List <RssPost> rssItems) {
 		this.rssItems = rssItems;
 	}
 
-	
 }
