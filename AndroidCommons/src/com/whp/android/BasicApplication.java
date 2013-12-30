@@ -35,8 +35,8 @@ public class BasicApplication extends Application {
 	public static String APPLICATION_STATUS_ACTIVE = "ACTIVE";
 	public static String APPLICATION_STATUS_NOT_ACTIVE = "NOT_ACTIVE";
 
-	private static Context context;
-	private static int activitiesRunning = 0;
+	protected static Context context;
+	protected static int activitiesRunning = 0;
 
 	public void onCreate() {
 		Log.d (TAG, "onCreate");
