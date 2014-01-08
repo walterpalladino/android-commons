@@ -31,7 +31,8 @@ public class LocationUtils {
 	 * @return
 	 */
 	public static boolean isBetterLocation(LocationData newLocation, LocationData oldLocation,
-			long timeElapsedBetweenSamples) {
+			long maxTimeElapsedBetweenSamples, long maxAccuracyDelta) {
+		
 		if (oldLocation == null) {
 			// A new location is always better than no location
 			return true;
@@ -39,11 +40,11 @@ public class LocationUtils {
 
 		// Check whether the new location fix is newer or older
 		long timeDelta = newLocation.acquiredDate.getTimeInMillis () - oldLocation.acquiredDate.getTimeInMillis ();
-		boolean isSignificantlyNewer = timeDelta > timeElapsedBetweenSamples;
-		boolean isSignificantlyOlder = timeDelta < -timeElapsedBetweenSamples;
+		boolean isSignificantlyNewer = timeDelta > maxTimeElapsedBetweenSamples;
+		boolean isSignificantlyOlder = timeDelta < -maxTimeElapsedBetweenSamples;
 		boolean isNewer = timeDelta > 0;
 
-		// If it's been more than two minutes since the current location, use
+		// If it's been more than the maximum accepted since the current location, use
 		// the new location
 		// because the user has likely moved
 		if (isSignificantlyNewer) {
@@ -58,7 +59,7 @@ public class LocationUtils {
 		int accuracyDelta = (int) (newLocation.accuracy - oldLocation.accuracy);
 		boolean isLessAccurate = accuracyDelta > 0;
 		boolean isMoreAccurate = accuracyDelta < 0;
-		boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+		boolean isSignificantlyLessAccurate = accuracyDelta > maxAccuracyDelta;
 
 		// Check if the old and new location are from the same provider
 		boolean isFromSameProvider = isSameProvider (newLocation.provider, oldLocation.provider);
@@ -91,6 +92,13 @@ public class LocationUtils {
 		return provider1.equals (provider2);
 	}
 
+	/**
+	 * getDistanceBetweenLocations
+	 * 
+	 * @param loc1
+	 * @param loc2
+	 * @return
+	 */
 	public static double getDistanceBetweenLocations(LocationData loc1, LocationData loc2) {
 		double R = 6371; // Radius of the earth in km
 		double deltaLat = deg2rad (loc2.latitude - loc1.latitude); // deg2rad
@@ -103,8 +111,33 @@ public class LocationUtils {
 		return d;
 	}
 
+	/**
+	 * deg2rad
+	 * 
+	 * @param deg
+	 * @return
+	 */
 	public static double deg2rad(double deg) {
 		return deg * (Math.PI / 180);
 	}
 
+	/**
+	 * bearing
+	 * 
+	 * @param loc1
+	 * @param loc2
+	 * @return
+	 */
+	public static double getBearing(LocationData loc1, LocationData loc2) {
+		double longitude1 = loc1.longitude;
+		double longitude2 = loc2.longitude;
+		double latitude1 = Math.toRadians (loc1.latitude);
+		double latitude2 = Math.toRadians (loc2.latitude);
+		double longDiff = Math.toRadians (longitude2 - longitude1);
+		double y = Math.sin (longDiff) * Math.cos (latitude2);
+		double x = Math.cos (latitude1) * Math.sin (latitude2) - Math.sin (latitude1) * Math.cos (latitude2)
+				* Math.cos (longDiff);
+
+		return (Math.toDegrees (Math.atan2 (y, x)) + 360) % 360;
+	}
 }
