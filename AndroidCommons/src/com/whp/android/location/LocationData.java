@@ -50,6 +50,18 @@ public class LocationData implements Serializable {
 
 	/**
 	 * Constructor
+	 * @param latitude
+	 * @param longitude
+	 */
+	public LocationData (double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		Calendar date = Calendar.getInstance ();
+		this.acquiredDate = date;
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param location
 	 */
@@ -62,11 +74,12 @@ public class LocationData implements Serializable {
 		this.acquiredDate = date;
 		this.provider = location.getProvider ();
 		this.accuracy = location.getAccuracy ();
-		this.altitude	= location.getAltitude ();
+		this.altitude = location.getAltitude ();
 	}
-	
+
 	@Override
 	public String toString() {
-		return "" + this.latitude + "/" + this.longitude + "/" + this.altitude + "/" + this.accuracy + "/" + this.provider;
+		return "" + this.latitude + "/" + this.longitude + "/" + this.altitude + "/" + this.accuracy + "/"
+				+ this.provider;
 	}
 }

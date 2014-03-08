@@ -23,22 +23,64 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+/**
+ * @author Walter Hugo Palladino
+ * @since 24/02/2014
+ *
+ */
 public class BitmapManager {
 
+	/**
+	 * show
+	 * @param url
+	 * @param imageView
+	 * @param width
+	 * @param height
+	 * @param lazy
+	 */
 	public static void show (final String url, final ImageView imageView,
 			final int width, final int height, boolean lazy) {
 		
 		if (lazy) {
 //			Bitmap spinner = BitmapFactory.decodeResource(BasicApplication.getAppContext().getResources(), R.drawable.spinner);
 //			BitmapLazyLoader.INSTANCE.setPlaceholder(spinner);*/
-			BitmapLazyLoader.INSTANCE.loadBitmap( url, imageView, width, height);
+			BitmapLazyLoader.INSTANCE.loadBitmap( url, imageView, width, height, false);
 		} else {
-			BitmapManager.loadBitmap( url, imageView, width, height);
+			BitmapManager.loadBitmap( url, imageView, width, height, false);
 		}
 	}
 	
+	/**
+	 * show
+	 * @param url
+	 * @param imageView
+	 * @param width
+	 * @param height
+	 * @param lazy
+	 * @param crop
+	 */
+	public static void show (final String url, final ImageView imageView,
+			final int width, final int height, boolean lazy, boolean crop) {
+		
+		if (lazy) {
+//			Bitmap spinner = BitmapFactory.decodeResource(BasicApplication.getAppContext().getResources(), R.drawable.spinner);
+//			BitmapLazyLoader.INSTANCE.setPlaceholder(spinner);*/
+			BitmapLazyLoader.INSTANCE.loadBitmap( url, imageView, width, height, crop);
+		} else {
+			BitmapManager.loadBitmap( url, imageView, width, height, crop);
+		}
+	}
+	
+	/**
+	 * loadBitmap
+	 * @param url
+	 * @param imageView
+	 * @param width
+	 * @param height
+	 * @param crop
+	 */
 	public static void loadBitmap (final String url, final ImageView imageView,
-			final int width, final int height) {
+			final int width, final int height, final boolean crop) {
 		
 		URL url2 = null;
 		try {
