@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.whp.android.security.SecurityUtils;
+
 /**
  * @author Walter Hugo Palladino
  * @since 06/07/2013
@@ -38,6 +40,7 @@ public class BasicApplication extends Application {
 	protected static Context context;
 	protected static int activitiesRunning = 0;
 
+	@Override
 	public void onCreate() {
 		Log.d (TAG, "onCreate");
 		super.onCreate ();
@@ -45,22 +48,41 @@ public class BasicApplication extends Application {
 
 	}
 
+	/**
+	 * getAppContext
+	 * @return
+	 */
 	public static Context getAppContext() {
 		return BasicApplication.context;
 	}
 
+	/**
+	 * getAlarmManager
+	 * @return
+	 */
 	public static AlarmManager getAlarmManager() {
 		return (AlarmManager) getAppContext ().getSystemService (Context.ALARM_SERVICE);
 	}
 
+	/**
+	 * getActivitiesRunning
+	 * @return
+	 */
 	public static int getActivitiesRunning() {
 		return activitiesRunning;
 	}
 
+	/**
+	 * setActivitiesRunning
+	 * @param activitiesRunning
+	 */
 	private static void setActivitiesRunning(int activitiesRunning) {
 		BasicApplication.activitiesRunning = activitiesRunning;
 	}
 
+	/**
+	 * incActivitiesRunning
+	 */
 	public static void incActivitiesRunning() {
 
 		if (getActivitiesRunning () == 0) {
@@ -73,6 +95,9 @@ public class BasicApplication extends Application {
 		Log.d (TAG, "incActivitiesRunning : " + getActivitiesRunning ());
 	}
 
+	/**
+	 * decActivitiesRunning
+	 */
 	public static void decActivitiesRunning() {
 		if (getActivitiesRunning () > 0) {
 			setActivitiesRunning (getActivitiesRunning () - 1);
@@ -86,6 +111,10 @@ public class BasicApplication extends Application {
 		}
 	}
 
+	/**
+	 * broadcastStatusChange
+	 * @param data
+	 */
 	private static void broadcastStatusChange(String data) {
 		Log.d (TAG, "broadcastStatusChange : " + data);
 
@@ -98,6 +127,14 @@ public class BasicApplication extends Application {
 		broadcast.setAction (APPLICATION_STATUS_CHANGED);
 
 		BasicApplication.context.sendBroadcast (broadcast);
+	}
+	
+	/**
+	 * getAppKeyHash
+	 * @return
+	 */
+	public static String getAppKeyHash () {
+		return SecurityUtils.getAppKeyHash (BasicApplication.getAppContext());
 	}
 
 }
