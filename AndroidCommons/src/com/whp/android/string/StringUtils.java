@@ -68,4 +68,19 @@ public class StringUtils {
 	public static String trim(String string) {
 		return string.replaceAll ("\\s", "");
 	}
+
+	/**
+	 * repeat
+	 * 
+	 * @param c
+	 * @param size
+	 * @return
+	 */
+	public static String repeat(char c, int size) {
+		StringBuffer stringBuffer = new StringBuffer ();
+		for (int n = 0; n < size; n++) {
+			stringBuffer.append (c);
+		}
+		return stringBuffer.toString ();
+	}
 }
