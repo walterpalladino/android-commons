@@ -6,9 +6,14 @@ Common Android Libraries
 This Lib includes several common utilities:
 
 
-*Location
-*Maps
-*Navigation Drawer
-*RSS Reader
-*Splash Screen
-*String Utils
+* Location
+
+* Maps
+
+* Navigation Drawer
+
+* RSS Reader
+
+* Splash Screen
+
+* String Utils
