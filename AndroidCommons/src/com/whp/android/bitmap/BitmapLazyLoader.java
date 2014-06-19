@@ -139,6 +139,9 @@ public enum BitmapLazyLoader {
 
 	private Bitmap downloadBitmap(String url, int width, int height, boolean crop) {
 		try {
+			URL urlUrl = new URL(url);
+			InputStream content = (InputStream)urlUrl.getContent();
+			
 			Bitmap bitmap = BitmapFactory.decodeStream ((InputStream) new URL (url).getContent ());
 
 			// Try to adjust aspect in case of need
