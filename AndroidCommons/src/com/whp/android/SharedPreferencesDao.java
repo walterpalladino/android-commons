@@ -57,6 +57,7 @@ public class SharedPreferencesDao {
 
 	public void delete(String key) {
 		prefsEditor.remove (key);
+		prefsEditor.commit ();
 	}
 
 }
