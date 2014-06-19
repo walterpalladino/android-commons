@@ -33,6 +33,8 @@ public class CustomLocationListener implements LocationListener, OnLocationChang
 	private static final String TAG = CustomLocationListener.class.getCanonicalName ();
 
 	public static final String LOCATION_LISTENER_BROADCAST_ACTION = "LOCATION_LISTENER_BROADCAST_ACTION";
+	public static final String LOCATION_NEW = "LOCATION_NEW";
+	public static final String LOCATION_PREV = "LOCATION_PREV";
 
 	private static final int MAX_SAMPLE_TIME = 2 * 60 * 1000;
 	private static final long MAX_ACCURACY_DELTA = 200;
@@ -59,6 +61,7 @@ public class CustomLocationListener implements LocationListener, OnLocationChang
 
 	}
 
+	@Override
 	public void onLocationChanged(final Location loc) {
 		Log.d (TAG, "onLocationChanged");
 
@@ -111,10 +114,8 @@ public class CustomLocationListener implements LocationListener, OnLocationChang
 		Intent intent;
 		intent = new Intent (LOCATION_LISTENER_BROADCAST_ACTION);
 
-		intent.putExtra ("Latitude", newLocation.latitude);
-		intent.putExtra ("Longitude", newLocation.longitude);
-		intent.putExtra ("Altitude", newLocation.altitude);
-		intent.putExtra ("Provider", newLocation.provider);
+		intent.putExtra(LOCATION_NEW, newLocation);
+		intent.putExtra(LOCATION_PREV, prevLocation);
 
 		this.context.sendBroadcast (intent);
 
