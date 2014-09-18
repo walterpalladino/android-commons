@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Walter Hugo Palladino
+ * Copyright 2014 Walter Hugo Palladino
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,12 @@
  */
 package com.whp.android.validator;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.whp.android.string.StringUtils;
 
 /**
  * @author Walter Hugo Palladino
@@ -41,4 +45,23 @@ public class IpValidator {
 		return matcher.matches();
 
 	}
+
+	/**
+	 * validatePort
+	 *
+	 * @param port
+	 * @return
+	 */
+	public static boolean validatePort (final String port) {
+		if (StringUtils.isEmpty(port)) {
+			return false;
+		}
+		try {
+			NumberFormat.getInstance().parse(port);
+		} catch (ParseException e) {
+			return false;
+		}
+		return true;
+	}
+
 }
