@@ -33,65 +33,93 @@ import com.whp.android.commons.R;
 
 public class CommonDialogs {
 
-	public static AlertDialog showInformationDialog(String title, String message, Context context) {
+	/**
+	 * showInformationDialog
+	 *
+	 * @param title
+	 * @param message
+	 * @param context
+	 * @return
+	 */
+	public static AlertDialog showInformationDialog (String title, String message, Context context) {
 
-		AlertDialog.Builder alt_bld = new AlertDialog.Builder (context);
-		alt_bld.setMessage (message);
-		alt_bld.setCancelable (false);
-		alt_bld.setPositiveButton ("Aceptar", new DialogInterface.OnClickListener () {
+		AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
+		alt_bld.setMessage(message);
+		alt_bld.setCancelable(false);
+		alt_bld.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.dismiss ();
+			public void onClick (DialogInterface dialog, int id) {
+				dialog.dismiss();
 			}
 		});
 
-		AlertDialog alert = alt_bld.create ();
+		AlertDialog alert = alt_bld.create();
 
 		// Title for AlertDialog
-		alert.setTitle (title);
+		alert.setTitle(title);
 
-		alert.show ();
+		alert.show();
 		return alert;
 	}
 
-	public static void showInformationDialog(String title, String message, Context context,
+	/**
+	 * showInformationDialog
+	 *
+	 * @param title
+	 * @param message
+	 * @param context
+	 * @param positiveListener
+	 * @param showNegativeOption
+	 */
+	public static void showInformationDialog (String title, String message, Context context,
 			DialogInterface.OnClickListener positiveListener, boolean showNegativeOption) {
 
-		AlertDialog.Builder alt_bld = new AlertDialog.Builder (context);
-		alt_bld.setMessage (message);
-		alt_bld.setCancelable (false);
-		alt_bld.setPositiveButton ("Aceptar", positiveListener);
+		AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
+		alt_bld.setMessage(message);
+		alt_bld.setCancelable(false);
+		alt_bld.setPositiveButton("Aceptar", positiveListener);
 		if (showNegativeOption) {
-			alt_bld.setNegativeButton ("Cancelar", new DialogInterface.OnClickListener () {
+			alt_bld.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss ();
+				public void onClick (DialogInterface dialog, int id) {
+					dialog.dismiss();
 				}
 			});
 		}
 
-		AlertDialog alert = alt_bld.create ();
+		AlertDialog alert = alt_bld.create();
 
 		// Title for AlertDialog
-		alert.setTitle (title);
+		alert.setTitle(title);
 
-		alert.show ();
+		alert.show();
 	}
 
-	public static void showMessage(String message) {
+	/**
+	 * showMessage
+	 *
+	 * @param message
+	 */
+	public static void showMessage (String message) {
 
-		Toast toast = Toast.makeText (BasicApplication.getAppContext (), message, Toast.LENGTH_LONG);
-		toast.setGravity (Gravity.CENTER, 0, 0);
-		toast.show ();
+		Toast toast = Toast.makeText(BasicApplication.getAppContext(), message, Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
 
 	}
 
-	public static void showMessageError(EditText ed, String message) {
+	/**
+	 * showMessageError
+	 *
+	 * @param ed
+	 * @param message
+	 */
+	public static void showMessageError (EditText ed, String message) {
 
-		CommonDialogs.showMessage (message);
+		CommonDialogs.showMessage(message);
 
 		if (ed != null) {
-			ed.requestFocus ();
+			ed.requestFocus();
 		}
 
 	}
@@ -106,36 +134,36 @@ public class CommonDialogs {
 	 * @param onClickListener
 	 * @return
 	 */
-	public static Dialog showMessageDialog(int viewId, String title, String message, Context context,
+	public static Dialog showMessageDialog (int viewId, String title, String message, Context context,
 			OnClickListener onClickListener) {
 
-		final Dialog dialog = new Dialog (context);
-		dialog.requestWindowFeature (Window.FEATURE_NO_TITLE);
-		dialog.setContentView (viewId);
+		final Dialog dialog = new Dialog(context);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(viewId);
 
-		TextView txtTitle = (TextView) dialog.findViewById (R.id.custom_message_dialog_title);
-		txtTitle.setText (title);
+		TextView txtTitle = (TextView) dialog.findViewById(R.id.custom_message_dialog_title);
+		txtTitle.setText(title);
 
 		// set the custom dialog components - text, image and button
-		TextView text = (TextView) dialog.findViewById (R.id.custom_message_dialog_message);
-		text.setText (message);
+		TextView text = (TextView) dialog.findViewById(R.id.custom_message_dialog_message);
+		text.setText(message);
 
-		ImageButton imageButtonMessageAccept = (ImageButton) dialog.findViewById (R.id.custom_message_dialog_button);
+		ImageButton imageButtonMessageAccept = (ImageButton) dialog.findViewById(R.id.custom_message_dialog_button);
 		// if button is clicked, close the custom dialog
 		if (onClickListener == null) {
-			imageButtonMessageAccept.setOnClickListener (new OnClickListener () {
+			imageButtonMessageAccept.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public void onClick(View arg0) {
-					dialog.dismiss ();
+				public void onClick (View arg0) {
+					dialog.dismiss();
 				}
 
 			});
 		} else {
-			imageButtonMessageAccept.setOnClickListener (onClickListener);
+			imageButtonMessageAccept.setOnClickListener(onClickListener);
 		}
 
-		dialog.show ();
+		dialog.show();
 
 		return dialog;
 	}
