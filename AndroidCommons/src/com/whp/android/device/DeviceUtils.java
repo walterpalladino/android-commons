@@ -16,10 +16,7 @@
 package com.whp.android.device;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.view.Display;
-import android.view.Surface;
-import android.view.WindowManager;
+import android.util.DisplayMetrics;
 
 /**
  * @author Walter Hugo Palladino
@@ -29,44 +26,70 @@ import android.view.WindowManager;
 public class DeviceUtils {
 
 	/**
+	 * Checks if device is in landscape mode Some devices did not informs well
+	 * his rotation so I decided to use a more raw way to check using device
+	 * screen dimensions.
+	 * 
 	 * isLandscapeMode
 	 *
 	 * @return
 	 */
 	public static boolean isLandscapeMode (Context context) {
 
-		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		Display display = windowManager.getDefaultDisplay();
+		// WindowManager windowManager = (WindowManager)
+		// context.getSystemService(Context.WINDOW_SERVICE);
+		// Display display = windowManager.getDefaultDisplay();
+		//
+		// int rotation = display.getRotation();
+		//
+		// if (Surface.ROTATION_0 == rotation || Surface.ROTATION_180 ==
+		// rotation) {
+		// if (DeviceUtils.isTablet(context)) {
+		// // This is a Tablet and it is in Landscape orientation
+		// return true;
+		// } else {
+		// // This is a Phone and it is in Portrait orientation
+		// return false;
+		// }
+		// } else {
+		// if (DeviceUtils.isTablet(context)) {
+		// // This is a Tablet and it is in Portrait orientation
+		// return false;
+		// } else {
+		// // This is a Phone and it is in Landscape orientation
+		// return true;
+		// }
+		// }
 
-		int rotation = display.getRotation();
+		DisplayMetrics dm = context.getResources().getDisplayMetrics();
+		float screenWidth = dm.widthPixels / dm.xdpi;
+		float screenHeight = dm.heightPixels / dm.ydpi;
 
-		if (Surface.ROTATION_0 == rotation || Surface.ROTATION_180 == rotation) {
-			if (DeviceUtils.isTablet(context)) {
-				// This is a Tablet and it is in Landscape orientation
-				return true;
-			} else {
-				// This is a Phone and it is in Portrait orientation
-				return false;
-			}
-		} else {
-			if (DeviceUtils.isTablet(context)) {
-				// This is a Tablet and it is in Portrait orientation
-				return false;
-			} else {
-				// This is a Phone and it is in Landscape orientation
-				return true;
-			}
-		}
+		return screenWidth > screenHeight;
 	}
 
 	/**
+	 * Check if the device has a screen bigger that 6 inches
+	 * 
 	 * isTablet
 	 *
 	 * @param context
 	 * @return
 	 */
 	public static boolean isTablet (Context context) {
-		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+
+		try {
+			// Compute screen size
+			DisplayMetrics dm = context.getResources().getDisplayMetrics();
+			float screenWidth = dm.widthPixels / dm.xdpi;
+			float screenHeight = dm.heightPixels / dm.ydpi;
+			double size = Math.sqrt(Math.pow(screenWidth, 2) + Math.pow(screenHeight, 2));
+			// Tablet devices should have a screen size greater than 6 inches
+			return size >= 6;
+		} catch (Throwable t) {
+			return false;
+		}
+
 	}
 
 }
