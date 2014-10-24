@@ -17,6 +17,7 @@ package com.whp.android.device;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 /**
  * @author Walter Hugo Palladino
@@ -26,9 +27,8 @@ import android.util.DisplayMetrics;
 public class DeviceUtils {
 
 	/**
-	 * Checks if device is in landscape mode Some devices did not informs well
-	 * his rotation so I decided to use a more raw way to check using device
-	 * screen dimensions.
+	 * Checks if device is in landscape mode Some devices did not informs well his rotation so I decided to use a more raw way to
+	 * check using device screen dimensions.
 	 * 
 	 * isLandscapeMode
 	 *
@@ -90,6 +90,22 @@ public class DeviceUtils {
 			return false;
 		}
 
+	}
+
+	/**
+	 * getStatusBarHeight
+	 *
+	 * @param context
+	 * @return
+	 */
+	public static int getStatusBarHeight (Context context) {
+
+		int titleBarHeight = 0;
+		int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			titleBarHeight = context.getResources().getDimensionPixelSize(resourceId);
+		}
+		return titleBarHeight;
 	}
 
 }
