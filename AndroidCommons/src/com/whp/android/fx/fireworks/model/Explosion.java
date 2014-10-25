@@ -18,8 +18,6 @@ package com.whp.android.fx.fireworks.model;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.util.Log;
-
 
 /**
  * @author Walter Hugo Palladino
@@ -29,91 +27,128 @@ import android.util.Log;
 public class Explosion {
 
 	private static final String TAG = Explosion.class.getSimpleName();
-	
-	public static final int STATE_ALIVE 	= 0;	// at least 1 particle is alive
-	public static final int STATE_DEAD 		= 1;	// all particles are dead
-	
-	private Particle[] particles;			// particles in the explosion
-	private int x, y;						// the explosion's origin
-	private float gravity;					// the gravity of the explosion (+ upward, - down)
-	private float wind;						// speed of wind on horizontal
-	private int size;						// number of particles
-	private int state;						// whether it's still active or not
-	
-	public Explosion(int particleNr, int x, int y) {
-		
-		Log.d(TAG, "Explosion created at " + x + "," + y);
-		
+
+	public static final int STATE_ALIVE = 0; // at least 1 particle is alive
+	public static final int STATE_DEAD = 1; // all particles are dead
+
+	private Particle[] particles; // particles in the explosion
+	private int x, y; // the explosion's origin
+	private float gravity; // the gravity of the explosion (+ upward, - down)
+	private float wind; // speed of wind on horizontal
+	private int size; // number of particles
+	private int state; // whether it's still active or not
+
+	/**
+	 * @param particleNr
+	 * @param x
+	 * @param y
+	 */
+	public Explosion (int particleNr, int x, int y) {
+
 		int color = Color.argb(255, rndInt(0, 255), rndInt(0, 255), rndInt(0, 255));
-		
+
 		this.state = STATE_ALIVE;
 		this.particles = new Particle[particleNr];
-	 	for (int i = 0; i < this.particles.length; i++) {
-			Particle p = new Particle(x, y, color );
+		for (int i = 0; i < this.particles.length; i++) {
+			Particle p = new Particle(x, y, color);
 			this.particles[i] = p;
 		}
-	 	this.size = particleNr;
+		this.size = particleNr;
 	}
-	
-	// Return an integer that ranges from min inclusive to max inclusive.
-	static int rndInt(int min, int max) {
+
+	/**
+	 * rndInt
+	 * 
+	 * Return an integer that ranges from min inclusive to max inclusive.
+	 *
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	static int rndInt (int min, int max) {
 		return (int) (min + Math.random() * (max - min + 1));
 	}
-	
-	public Particle[] getParticles() {
+
+	public Particle[] getParticles () {
 		return particles;
 	}
-	public void setParticles(Particle[] particles) {
+
+	public void setParticles (Particle[] particles) {
 		this.particles = particles;
 	}
-	public int getX() {
+
+	public int getX () {
 		return x;
 	}
-	public void setX(int x) {
+
+	public void setX (int x) {
 		this.x = x;
 	}
-	public int getY() {
+
+	public int getY () {
 		return y;
 	}
-	public void setY(int y) {
+
+	public void setY (int y) {
 		this.y = y;
 	}
-	public float getGravity() {
+
+	public float getGravity () {
 		return gravity;
 	}
-	public void setGravity(float gravity) {
+
+	public void setGravity (float gravity) {
 		this.gravity = gravity;
 	}
-	public float getWind() {
+
+	public float getWind () {
 		return wind;
 	}
-	public void setWind(float wind) {
+
+	public void setWind (float wind) {
 		this.wind = wind;
 	}
-	public int getSize() {
+
+	public int getSize () {
 		return size;
 	}
-	public void setSize(int size) {
+
+	public void setSize (int size) {
 		this.size = size;
 	}
-	
-	public int getState() {
+
+	public int getState () {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState (int state) {
 		this.state = state;
 	}
 
 	// helper methods -------------------------
-	public boolean isAlive() {
+	/**
+	 * isAlive
+	 *
+	 * @return
+	 */
+	public boolean isAlive () {
 		return this.state == STATE_ALIVE;
 	}
-	public boolean isDead() {
+
+	/**
+	 * isDead
+	 *
+	 * @return
+	 */
+	public boolean isDead () {
 		return this.state == STATE_DEAD;
 	}
 
-	public void update() {
+	/**
+	 * update
+	 *
+	 */
+	public void update () {
 		if (this.state != STATE_DEAD) {
 			boolean isDead = true;
 			for (int i = 0; i < this.particles.length; i++) {
@@ -123,11 +158,16 @@ public class Explosion {
 				}
 			}
 			if (isDead)
-				this.state = STATE_DEAD; 
+				this.state = STATE_DEAD;
 		}
 	}
-	
-	public void update(Rect container) {
+
+	/**
+	 * update
+	 *
+	 * @param container
+	 */
+	public void update (Rect container) {
 		if (this.state != STATE_DEAD) {
 			boolean isDead = true;
 			for (int i = 0; i < this.particles.length; i++) {
@@ -137,12 +177,17 @@ public class Explosion {
 				}
 			}
 			if (isDead)
-				this.state = STATE_DEAD; 
+				this.state = STATE_DEAD;
 		}
 	}
 
-	public void draw(Canvas canvas) {
-		for(int i = 0; i < this.particles.length; i++) {
+	/**
+	 * draw
+	 *
+	 * @param canvas
+	 */
+	public void draw (Canvas canvas) {
+		for (int i = 0; i < this.particles.length; i++) {
 			if (this.particles[i].isAlive()) {
 				this.particles[i].draw(canvas);
 			}

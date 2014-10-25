@@ -132,6 +132,11 @@ public class Particle {
 		return this.state == STATE_DEAD;
 	}
 
+	/**
+	 * @param x
+	 * @param y
+	 * @param color
+	 */
 	public Particle (int x, int y, int color) {
 
 		this.x = x;
@@ -167,14 +172,32 @@ public class Particle {
 	}
 
 	// Return an integer that ranges from min inclusive to max inclusive.
+	/**
+	 * rndInt
+	 *
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	static int rndInt (int min, int max) {
 		return (int) (min + Math.random() * (max - min + 1));
 	}
 
+	/**
+	 * rndDbl
+	 *
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	static double rndDbl (double min, double max) {
 		return min + (max - min) * Math.random();
 	}
 
+	/**
+	 * update
+	 *
+	 */
 	public void update () {
 
 		if (this.state != STATE_DEAD) {
@@ -202,6 +225,11 @@ public class Particle {
 
 	}
 
+	/**
+	 * update
+	 *
+	 * @param container
+	 */
 	public void update (Rect container) {
 		// update with collision
 		if (this.isAlive()) {
@@ -218,6 +246,11 @@ public class Particle {
 		update();
 	}
 
+	/**
+	 * draw
+	 *
+	 * @param canvas
+	 */
 	public void draw (Canvas canvas) {
 		paint.setColor(this.color);
 		canvas.drawCircle(x, y, widht, paint);
