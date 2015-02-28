@@ -16,8 +16,8 @@
 package com.whp.android.device;
 
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 
 /**
  * @author Walter Hugo Palladino
@@ -108,4 +108,14 @@ public class DeviceUtils {
 		return titleBarHeight;
 	}
 
+	/**
+	 * getUUID
+	 *
+	 * @param context
+	 * @return UUID
+	 */
+	public static String getUUID (Context context) {
+		TelephonyManager tManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+		return tManager.getDeviceId();
+	}
 }
