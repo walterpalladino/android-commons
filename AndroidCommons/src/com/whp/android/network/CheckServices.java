@@ -42,7 +42,25 @@ public class CheckServices {
 		} else
 			return true;
 	}
-	
+
+	/**
+	 * 
+	 * isNetworkConnected
+	 *
+	 * @param context
+	 * @return
+	 */
+	@SuppressWarnings("static-access")
+	public static boolean isNetworkConnected(Context context) {
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(BasicApplication.getAppContext().CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		if (ni == null) {
+			// There are no active networks.
+			return false;
+		} else
+			return true;
+	}
+
 	public static String getPhoneNumber() {
 		TelephonyManager telephonyManager =(TelephonyManager)BasicApplication.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
 		return telephonyManager.getLine1Number();
