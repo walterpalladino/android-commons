@@ -16,8 +16,6 @@
 package com.whp.android.bitmap.cache;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,17 +28,17 @@ import android.graphics.Bitmap;
  * @since Mar 2, 2015
  *
  */
-public enum BitmapMemoryCache {
+public enum BitmapMemoryPersistentCache {
 
 	INSTANCE;
 
-	private final Map<String, SoftReference<Bitmap>> cache;
+	private final Map<String, Bitmap> cache;
 
 	/**
 	 * 
 	 */
-	BitmapMemoryCache () {
-		cache = new HashMap<String, SoftReference<Bitmap>>();
+	BitmapMemoryPersistentCache () {
+		cache = new HashMap<String, Bitmap>();
 	}
 
 	/**
@@ -54,7 +52,7 @@ public enum BitmapMemoryCache {
 	 */
 	public boolean put (String url, Bitmap bitmap) throws UnsupportedEncodingException {
 		String key = URLEncoder.encode(url, "UTF-8");
-		cache.put(key, new SoftReference<Bitmap>(bitmap));
+		cache.put(key, bitmap);
 		return true;
 	}
 
@@ -69,7 +67,7 @@ public enum BitmapMemoryCache {
 	public Bitmap get (String url) throws UnsupportedEncodingException {
 		String key = URLEncoder.encode(url, "UTF-8");
 		if (cache.containsKey(key)) {
-			return cache.get(key).get();
+			return cache.get(key);
 		}
 		return null;
 	}
@@ -84,8 +82,7 @@ public enum BitmapMemoryCache {
 	 */
 	public Bitmap delete (String url) throws UnsupportedEncodingException {
 		String key = URLEncoder.encode(url, "UTF-8");
-		Reference<Bitmap> bmpRef = cache.remove(key);
-		return bmpRef == null ? null : bmpRef.get();
+		return cache.remove(key);
 	}
 
 	/**
