@@ -26,6 +26,7 @@ import android.graphics.Rect;
  */
 public class Explosion {
 
+	@SuppressWarnings("unused")
 	private static final String TAG = Explosion.class.getSimpleName();
 
 	public static final int STATE_ALIVE = 0; // at least 1 particle is alive
