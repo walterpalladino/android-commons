@@ -15,7 +15,6 @@
  */
 package com.whp.android.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
