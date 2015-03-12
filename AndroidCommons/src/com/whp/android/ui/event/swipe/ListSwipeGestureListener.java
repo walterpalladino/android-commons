@@ -31,6 +31,7 @@ import android.widget.ListView;
  */
 public class ListSwipeGestureListener extends SimpleOnGestureListener implements OnTouchListener {
 
+	@SuppressWarnings("unused")
 	private Context context;
 	private GestureDetector gestureDetector;
 	private ListView listView = null;
