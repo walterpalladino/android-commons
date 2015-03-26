@@ -29,7 +29,7 @@ import com.whp.android.Log;
  */
 public class DateUtils {
 
-	private static final String TAG = DateUtils.class.getCanonicalName ();
+	private static final String TAG = DateUtils.class.getCanonicalName();
 
 	private static final long DATE_BASE_1970 = 621355968000000000L;
 	private static final long MILLIS_TO_NANOS = 10000;
@@ -41,9 +41,9 @@ public class DateUtils {
 	 * @param date
 	 * @return
 	 */
-	public static String calendarToString(Calendar date) {
-		DateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd HH:mm");
-		return dateFormat.format (date.getTime ());
+	public static String calendarToString (Calendar date) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		return dateFormat.format(date.getTime());
 	}
 
 	/**
@@ -52,12 +52,12 @@ public class DateUtils {
 	 * @param date
 	 * @return
 	 */
-	public static String dateToString(Date date) {
+	public static String dateToString (Date date) {
 		if (date == null) {
 			return "";
 		} else {
-			DateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd HH:mm");
-			return dateFormat.format (date.getTime ());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+			return dateFormat.format(date.getTime());
 		}
 	}
 
@@ -68,11 +68,11 @@ public class DateUtils {
 	 * @param strDateFormat
 	 * @return
 	 */
-	public static String calendarToStringWithFormat(Calendar date, String strDateFormat) {
+	public static String calendarToStringWithFormat (Calendar date, String strDateFormat) {
 		String sRet = null;
 		if ((date != null) && (strDateFormat != null)) {
-			DateFormat dateFormat = new SimpleDateFormat (strDateFormat);// "yyyy/MM/dd HH:mm:ss"
-			sRet = dateFormat.format (date.getTime ());
+			DateFormat dateFormat = new SimpleDateFormat(strDateFormat);// "yyyy/MM/dd HH:mm:ss"
+			sRet = dateFormat.format(date.getTime());
 		}
 		return sRet;
 	}
@@ -83,9 +83,9 @@ public class DateUtils {
 	 * @param date
 	 * @return
 	 */
-	public static String calendarToDateString(Calendar date) {
-		DateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd");
-		return dateFormat.format (date.getTime ());
+	public static String calendarToDateString (Calendar date) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		return dateFormat.format(date.getTime());
 	}
 
 	/**
@@ -94,9 +94,9 @@ public class DateUtils {
 	 * @param date
 	 * @return
 	 */
-	public static String calendarToTimeString(Calendar date) {
-		DateFormat dateFormat = new SimpleDateFormat ("HH:mm:ss");
-		return dateFormat.format (date.getTime ());
+	public static String calendarToTimeString (Calendar date) {
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		return dateFormat.format(date.getTime());
 	}
 
 	/**
@@ -105,14 +105,14 @@ public class DateUtils {
 	 * @param strTime
 	 * @return
 	 */
-	public static int getMilliseconsFromString(String strTime) {
+	public static int getMilliseconsFromString (String strTime) {
 		int milliseconds = -1;
-		String array[] = strTime.split (":");
+		String array[] = strTime.split(":");
 		if (array.length == 2) {
-			milliseconds = Integer.parseInt (array[0]) * 60 * 1000 + Integer.parseInt (array[1]) * 1000;
+			milliseconds = Integer.parseInt(array[0]) * 60 * 1000 + Integer.parseInt(array[1]) * 1000;
 		} else if (array.length == 3) {
-			milliseconds = Integer.parseInt (array[0]) * 60 * 60 * 1000 + Integer.parseInt (array[1]) * 60 * 1000
-					+ Integer.parseInt (array[2]) * 1000;
+			milliseconds = Integer.parseInt(array[0]) * 60 * 60 * 1000 + Integer.parseInt(array[1]) * 60 * 1000
+					+ Integer.parseInt(array[2]) * 1000;
 		}
 		return milliseconds;
 	}
@@ -123,10 +123,10 @@ public class DateUtils {
 	 * @param strMillisecons
 	 * @return
 	 */
-	public static Calendar getCalendarFromString(String strMillisecons) {
-		Log.d (TAG, "DateUtils.calendarToString : " + strMillisecons);
-		Calendar date = Calendar.getInstance ();
-		date.setTimeInMillis (Long.parseLong (strMillisecons));
+	public static Calendar getCalendarFromString (String strMillisecons) {
+		Log.d(TAG, "DateUtils.calendarToString : " + strMillisecons);
+		Calendar date = Calendar.getInstance();
+		date.setTimeInMillis(Long.parseLong(strMillisecons));
 		return date;
 	}
 
@@ -136,7 +136,7 @@ public class DateUtils {
 	 * @param ticks
 	 * @return
 	 */
-	public static Calendar ticksToCalendar(long ticks) {
+	public static Calendar ticksToCalendar (long ticks) {
 
 		long millis;
 		millis = (ticks - DATE_BASE_1970) / MILLIS_TO_NANOS;
@@ -144,8 +144,8 @@ public class DateUtils {
 		if (millis < 0) {
 			return null;
 		} else {
-			Calendar date = Calendar.getInstance ();
-			date.setTimeInMillis (millis);
+			Calendar date = Calendar.getInstance();
+			date.setTimeInMillis(millis);
 			return date;
 		}
 	}
@@ -156,7 +156,7 @@ public class DateUtils {
 	 * @param ticks
 	 * @return
 	 */
-	public static long ticksToMillis(long ticks) {
+	public static long ticksToMillis (long ticks) {
 		return ticks / MILLIS_TO_NANOS;
 	}
 
@@ -166,9 +166,9 @@ public class DateUtils {
 	 * @param date
 	 * @return
 	 */
-	public static long calendarToTicks(Calendar date) {
+	public static long calendarToTicks (Calendar date) {
 		long ticks;
-		ticks = DATE_BASE_1970 + date.getTimeInMillis () * MILLIS_TO_NANOS;
+		ticks = DATE_BASE_1970 + date.getTimeInMillis() * MILLIS_TO_NANOS;
 		return ticks;
 	}
 
@@ -178,7 +178,7 @@ public class DateUtils {
 	 * @param millis
 	 * @return
 	 */
-	public static double millisToFractionalHours(long millis) {
+	public static double millisToFractionalHours (long millis) {
 		return ((double) millis) / MILLIS_TO_HOURS;
 	}
 
@@ -188,13 +188,13 @@ public class DateUtils {
 	 * @param ticks
 	 * @return
 	 */
-	public static String ticksToTimeAsString(long ticks) {
+	public static String ticksToTimeAsString (long ticks) {
 		String strTime = "";
 
 		long hours = ticks / 10000 / 1000 / 3600;
 		long minutes = (ticks / 10000 / 1000 / 60) % 60;
 
-		strTime = String.format ("%02d:%02d", hours, minutes);
+		strTime = String.format("%02d:%02d", hours, minutes);
 
 		return strTime;
 	}
@@ -205,13 +205,13 @@ public class DateUtils {
 	 * @param millis
 	 * @return
 	 */
-	public static String millisToTimeAsString(long millis) {
+	public static String millisToTimeAsString (long millis) {
 		String strTime = "";
 
 		long hours = millis / 1000 / 3600;
 		long minutes = (millis / 1000 / 60) % 60;
 
-		strTime = String.format ("%02d:%02d", hours, minutes);
+		strTime = String.format("%02d:%02d", hours, minutes);
 
 		return strTime;
 	}
@@ -221,9 +221,9 @@ public class DateUtils {
 	 * 
 	 * @return
 	 */
-	public static Calendar getUTCTime() {
+	public static Calendar getUTCTime () {
 		// return Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-		return Calendar.getInstance ();
+		return Calendar.getInstance();
 	}
 
 	/**
@@ -233,10 +233,10 @@ public class DateUtils {
 	 * @param cal2
 	 * @return
 	 */
-	public static Calendar getDifference(Calendar cal1, Calendar cal2) {
-		Calendar cal = Calendar.getInstance ();
-		long diff = cal2.getTimeInMillis () - cal1.getTimeInMillis ();
-		cal.setTimeInMillis (diff);
+	public static Calendar getDifference (Calendar cal1, Calendar cal2) {
+		Calendar cal = Calendar.getInstance();
+		long diff = cal2.getTimeInMillis() - cal1.getTimeInMillis();
+		cal.setTimeInMillis(diff);
 		return cal;
 	}
 
@@ -247,8 +247,35 @@ public class DateUtils {
 	 * @param cal2
 	 * @return
 	 */
-	public static String getDifferenceAsSTring(Calendar cal1, Calendar cal2) {
-		long diff = cal2.getTimeInMillis () - cal1.getTimeInMillis ();
-		return millisToTimeAsString (diff);
+	public static String getDifferenceAsSTring (Calendar cal1, Calendar cal2) {
+		long diff = cal2.getTimeInMillis() - cal1.getTimeInMillis();
+		return millisToTimeAsString(diff);
 	}
+
+	/**
+	 * 
+	 * millisencodsToCalendar
+	 *
+	 * @param millis
+	 * @return
+	 */
+	public static Calendar millisencodsToCalendar (long millis) {
+		Calendar date = Calendar.getInstance();
+		date.setTimeInMillis(millis);
+		return date;
+	}
+
+	/**
+	 * 
+	 * sencodsToCalendar
+	 *
+	 * @param secs
+	 * @return
+	 */
+	public static Calendar sencodsToCalendar (long secs) {
+		Calendar date = Calendar.getInstance();
+		date.setTimeInMillis(secs * 1000);
+		return date;
+	}
+
 }
