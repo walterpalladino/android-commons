@@ -18,6 +18,9 @@ public class Marker {
 	public static final int BACKGROUND_STYLE_CIRCLE = 1;
 	public static final int BACKGROUND_STYLE_SQUARE = 2;
 
+	private int id;
+	private int customType;
+
 	private String name;
 	private Bitmap image;
 
@@ -41,6 +44,9 @@ public class Marker {
 
 	public Marker () {
 
+		id = -1;
+		customType = 1;
+
 		width = 32;
 		height = 32;
 
@@ -50,6 +56,22 @@ public class Marker {
 		backgroundStyle = BACKGROUND_STYLE_NONE;
 		backgroundColor = Color.TRANSPARENT;
 
+	}
+
+	public int getId () {
+		return id;
+	}
+
+	public void setId (int id) {
+		this.id = id;
+	}
+
+	public int getCustomType () {
+		return customType;
+	}
+
+	public void setCustomType (int customType) {
+		this.customType = customType;
 	}
 
 	public String getName () {
