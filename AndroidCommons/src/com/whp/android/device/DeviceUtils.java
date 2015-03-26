@@ -21,6 +21,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
+import android.view.Surface;
 
 /**
  * @author Walter Hugo Palladino
@@ -38,31 +39,6 @@ public class DeviceUtils {
 	 * @return
 	 */
 	public static boolean isLandscapeMode (Context context) {
-
-		// WindowManager windowManager = (WindowManager)
-		// context.getSystemService(Context.WINDOW_SERVICE);
-		// Display display = windowManager.getDefaultDisplay();
-		//
-		// int rotation = display.getRotation();
-		//
-		// if (Surface.ROTATION_0 == rotation || Surface.ROTATION_180 ==
-		// rotation) {
-		// if (DeviceUtils.isTablet(context)) {
-		// // This is a Tablet and it is in Landscape orientation
-		// return true;
-		// } else {
-		// // This is a Phone and it is in Portrait orientation
-		// return false;
-		// }
-		// } else {
-		// if (DeviceUtils.isTablet(context)) {
-		// // This is a Tablet and it is in Portrait orientation
-		// return false;
-		// } else {
-		// // This is a Phone and it is in Landscape orientation
-		// return true;
-		// }
-		// }
 
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
 		float screenWidth = dm.widthPixels / dm.xdpi;
@@ -129,11 +105,22 @@ public class DeviceUtils {
 	 * @param activity
 	 */
 	public static void lockScreenOrientation (Activity activity) {
+
 		int currentOrientation = activity.getResources().getConfiguration().orientation;
-		if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else {
-			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		int currentRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
+		if (currentRotation == Surface.ROTATION_0 || currentRotation == Surface.ROTATION_90) {
+			if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+				activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			} else if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+				activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			}
+		} else if (currentRotation == Surface.ROTATION_180 || currentRotation == Surface.ROTATION_270) {
+			if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+				activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+			} else if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+				activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+			}
 		}
 	}
 
