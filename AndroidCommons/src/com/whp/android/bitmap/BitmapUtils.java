@@ -15,7 +15,10 @@
  */
 package com.whp.android.bitmap;
 
+import java.io.ByteArrayOutputStream;
+
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,6 +26,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.util.Base64;
 import android.view.View;
 
 /**
@@ -399,6 +403,31 @@ public class BitmapUtils {
 		canvas.drawBitmap(sourceBitmap, new Rect(0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight()), new Rect(0, 0,
 				targetWidth, targetHeight), null);
 		return targetBitmap;
+	}
+
+	/**
+	 * toBase64
+	 *
+	 * @param bitmap
+	 * @return String
+	 */
+	public static String toBase64 (Bitmap bitmap) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		byte[] imageBytes = baos.toByteArray();
+		String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+		return encodedImage;
+	}
+
+	/**
+	 * fromBase64
+	 *
+	 * @param encodedImage
+	 * @return Bitmap
+	 */
+	public static Bitmap fromBase64 (String encodedImage) {
+		byte[] decodedByte = Base64.decode(encodedImage, Base64.DEFAULT);
+		return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
 	}
 
 }
