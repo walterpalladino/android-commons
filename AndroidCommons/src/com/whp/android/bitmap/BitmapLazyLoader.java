@@ -144,22 +144,25 @@ public enum BitmapLazyLoader {
 			
 			Bitmap bitmap = BitmapFactory.decodeStream ((InputStream) new URL (url).getContent ());
 
-			// Try to adjust aspect in case of need
-			int bitmapWidth = bitmap.getWidth ();
-			int bitmapHeight = bitmap.getHeight ();
-
-			float aspectOriginal = (float) bitmapWidth / (float) bitmapHeight;
-			float aspectRequired = (float) width / (float) height;
-
-			if (aspectOriginal < aspectRequired) {
-				width *= aspectOriginal;
-			} else {
-				height /= aspectOriginal;
-			}
-
-			bitmap = Bitmap.createScaledBitmap (bitmap, width, height, true);
-			if (crop) {
-				bitmap = getRoundedShape (bitmap, width, height);
+			if ((width > 0) && (height > 0)) {
+				
+				// Try to adjust aspect in case of need
+				int bitmapWidth = bitmap.getWidth ();
+				int bitmapHeight = bitmap.getHeight ();
+	
+				float aspectOriginal = (float) bitmapWidth / (float) bitmapHeight;
+				float aspectRequired = (float) width / (float) height;
+	
+				if (aspectOriginal < aspectRequired) {
+					width *= aspectOriginal;
+				} else {
+					height /= aspectOriginal;
+				}
+	
+				bitmap = Bitmap.createScaledBitmap (bitmap, width, height, true);
+				if (crop) {
+					bitmap = getRoundedShape (bitmap, width, height);
+				}
 			}
 
 			cache.put (url, new SoftReference <Bitmap> (bitmap));
