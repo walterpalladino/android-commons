@@ -24,8 +24,8 @@ public class OdometerTextView extends TextView {
 
 	private ValueAnimator scrollAnimation;
 
-	private int animationDuration = 250;
-	private int animationSteps = 50;
+	private int animationDuration = 125;
+	private int animationSteps = 25;
 
 	public static final float IDEAL_ASPECT_RATIO = 1.66f;
 
@@ -51,6 +51,8 @@ public class OdometerTextView extends TextView {
 	private String digitBelowString;
 
 	private Rect textBounds = new Rect();
+
+	private boolean cancelled;
 
 	public OdometerTextView (Context context) {
 		super(context);
@@ -95,6 +97,7 @@ public class OdometerTextView extends TextView {
 		} else {
 
 			textPaint.setTextSize(textSize);
+			textPaint.setTypeface(getTypeface());
 
 			// Above
 			valueAbove = (int) currentValue;
@@ -137,6 +140,7 @@ public class OdometerTextView extends TextView {
 	private void drawString (Canvas canvas, Paint textPaint, float textSize, String string) {
 
 		textPaint.setTextSize(textSize);
+		textPaint.setTypeface(getTypeface());
 
 		textPaint.getTextBounds("0", 0, 1, textBounds);
 
@@ -199,6 +203,8 @@ public class OdometerTextView extends TextView {
 
 		this.value = newValue;
 
+		cancelled = false;
+		
 		if (doAnimation) {
 			startAnimation();
 		} else {
@@ -228,32 +234,32 @@ public class OdometerTextView extends TextView {
 			@Override
 			public void onAnimationRepeat (Animator animation) {
 
-/*				if (actualDigit < (maxDigits - 1)) {
-					if (digitAboveString.equals(digitBelowString)) {
-						actualDigit++;
-					} else {
-						currentValue += Math.pow(10, actualDigit);
-					}
-				} else {
+				if (cancelled) {
 					scrollAnimation.end();
-				}*/
-		    	if (actualDigit<(maxDigits-1)) {
-		    		
-					digitAboveString = Character.toString(valueAboveString.charAt(maxDigits - actualDigit - 1));
-					digitBelowString = Character.toString(valueBelowString.charAt(maxDigits - actualDigit - 1));
+				} else {
 
-		    		if (digitAboveString.equals(digitBelowString)) {
-			    		actualDigit++;
-		    		} else {
-		    			if (valueAbove < valueBelow) {
-			    			currentValue += Math.pow(10, actualDigit);
-		    			} else {
-			    			currentValue -= Math.pow(10, actualDigit);
-		    			}
-		    		}
-		    	} else {
-		    		scrollAnimation.end();
-		    	}
+					if (actualDigit < (maxDigits - 1)) {
+
+						digitAboveString = Character.toString(valueAboveString.charAt(maxDigits - actualDigit - 1));
+						digitBelowString = Character.toString(valueBelowString.charAt(maxDigits - actualDigit - 1));
+
+						if (digitAboveString.equals(digitBelowString)) {
+							actualDigit++;
+						} else {
+							if (valueAbove < valueBelow) {
+								currentValue += Math.pow(10, actualDigit);
+							} else {
+								currentValue -= Math.pow(10, actualDigit);
+							}
+						}
+					} else {
+						scrollAnimation.end();
+						if (mListener != null) {
+							mListener.OnUpdateCompleted();
+						}
+					}
+				}
+
 			}
 
 		});
@@ -262,4 +268,43 @@ public class OdometerTextView extends TextView {
 
 	}
 
+	/**
+	 * 
+	 * stopAllAnimations
+	 *
+	 */
+	public void stopAllAnimations () {
+		cancelled = true;
+		if (scrollAnimation != null) {
+			scrollAnimation.cancel();
+		}
+	}
+
+	/**
+	 * Property Name : mListener
+	 * 
+	 */
+	private OdometerTextViewCallback mListener = null;
+
+	/**
+	 * setListener
+	 * 
+	 * @param listener
+	 */
+	public void setListener (OdometerTextViewCallback listener) {
+		mListener = listener;
+	}
+
+	/**
+	 * @author Walter Hugo Palladino
+	 * @since Sep 11, 2015
+	 *
+	 */
+	public interface OdometerTextViewCallback {
+
+		/**
+		 * OnUpdateCompleted
+		 */
+		void OnUpdateCompleted ();
+	}
 }
