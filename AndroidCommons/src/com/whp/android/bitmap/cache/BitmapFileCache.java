@@ -36,7 +36,7 @@ public enum BitmapFileCache {
 
 	INSTANCE;
 
-	private static final String CACHE_DIR_NAME = "bitmaps_cache";
+	private String cacheDirName = "bitmaps_cache";
 
 	// private final Map<String, Bitmap> cache;
 	private File cacheDir;
@@ -47,9 +47,32 @@ public enum BitmapFileCache {
 	BitmapFileCache () {
 	}
 
+	/**
+	 * 
+	 * init
+	 *
+	 * @param context
+	 */
 	public void init (Context context) {
 		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-			cacheDir = new File(android.os.Environment.getExternalStorageDirectory(), CACHE_DIR_NAME);
+			cacheDir = new File(android.os.Environment.getExternalStorageDirectory(), BitmapFileCache.INSTANCE.cacheDirName);
+		else
+			cacheDir = context.getCacheDir();
+		if (!cacheDir.exists())
+			cacheDir.mkdirs();
+	}
+
+	/**
+	 * 
+	 * init
+	 *
+	 * @param context
+	 * @param cacheDirName
+	 */
+	public void init (Context context, String cacheDirName) {
+		BitmapFileCache.INSTANCE.cacheDirName = cacheDirName;
+		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+			cacheDir = new File(android.os.Environment.getExternalStorageDirectory(), BitmapFileCache.INSTANCE.cacheDirName);
 		else
 			cacheDir = context.getCacheDir();
 		if (!cacheDir.exists())
